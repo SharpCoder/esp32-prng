@@ -47,31 +47,6 @@ void wifi_scan(void* buf, wifi_promiscuous_pkt_type_t packet_type) {
                 0
             );
 
-            // ESP_LOGI(TAG, "%u", (uint16_t)rnd % 2);
-            // uint16_t rnd = 0;
-            // for (int r = 0; r < packet->rx_ctrl.sig_len; r++) {
-            //     rnd += packet->payload[r];
-            // }
-
-            // // int chunk = (int)(packet->rx_ctrl.sig_len / 16);
-            // for (int i = 0; i < 16; i++) {
-            //     uint8_t hash = 0;
-            //     for (int r = 0; r < fmin(chunk, 500); r++) {
-            //         hash += packet->payload[i*chunk+r];
-            //     }
-
-            //     if (hash % 2) {
-            //         rnd |= (1 << i);
-            //     }
-            // }
-
-            // ESP_LOGI(TAG, "%d", rnd);
-            // ESP_LOGI(TAG, "%d", packet->rx_ctrl.sig_len % 2);
-            // ESP_LOGI(TAG, "Received packet with len %d", packet->rx_ctrl.sig_len);
-            // for (int i = 0; i < packet->rx_ctrl.sig_len; i++) {
-            //     ESP_LOGI(TAG, "%X", packet->payload[i]);
-            // }
-            // esp_wifi_set_promiscuous(false);
             break;
         }
 
@@ -89,7 +64,6 @@ void queue_worker(void* params) {
     while(1) {
         if (prngQueue != NULL) {
             if (xQueueReceive(prngQueue, &digest, 0) == pdPASS) {
-                // ESP_LOGI(TAG, "%d", (uint16_t)digest%2);
                 if (digest % 2 == 1) {
                     rnd |= mask;
                 }
